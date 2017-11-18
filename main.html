@@ -56,6 +56,12 @@
         updateColour("red");
         updateColour("blue");
         updateColour("green");
+        setColour("colorTitle");
+    }
+
+    function setColour(id){
+        element = document.getElementById(id);
+        element.style.backgroundColor = "rgb(" + [red,green,blue].join(",") + ")";
     }
 
     function updateColour(colour, id){
@@ -81,7 +87,7 @@
         return number;
     }
 
-    function addToLog(logText){
+    function logger(logText){
         document.getElementById("logger").innerHTML += logText + "<br>";
         return 
     }
