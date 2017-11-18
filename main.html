@@ -16,30 +16,76 @@
         <div class="row">
 
             <div class="col-xs-12">
-                <h2 class="text-center">
+                <h2 class="text-center" id="colorTitle">
                     Color Selection Helper
                 </h2>
             </div>
         
 
             <div class="col-xs-6">
-                <div class="form-group">
+                <div class="form-group" name="colorForm">
                     
                     <label for="redValue">Red</label>
-                    <input type="text" class="form-control" id="redValue" name="hi from nam" , text="hi from text">
+                    <input type="text" class="form-control" id="redValue">
                     
                     <label for="greenValue">Green</label>
-                    <input type="text" class="form-control" id="greenValue" name="hi from nam" , text="hi from text">
+                    <input type="text" class="form-control" id="greenValue">
 
                     <label for="blueValue">Blue</label>
-                    <input type="text" class="form-control" id="blueValue" name="hi from nam" , text="hi from text">
+                    <input type="text" class="form-control" id="blueValue">
 
-                    <button class="btn" onclick="">Submit </button>
+                    <button class="btn" onclick="colorController()">Submit</button>
                 </div>
             </div>
 
         </div>
     </div>
+
+<div class="container">
+<p id="logger"></p>
+</div>
+
 </body>
+
+<script>
+    var red;
+    var blue;
+    var green;
+    
+    function colorController(){
+        updateColour("red");
+        updateColour("blue");
+        updateColour("green");
+    }
+
+    function updateColour(colour, id){
+        id = colour + "Value";
+        colourValue = document.getElementById(id).value;
+        var number = parseRgbNumber(colourValue);
+        if (number == null)
+        {
+            alert("For " + colour + " please enter a number between 0 and 255 ")
+            return;
+        }
+        eval("" + colour + " = " + number);
+    }
+
+    function parseRgbNumber(stringNumber){
+        var number = parseInt(stringNumber);
+        if (Number.isNaN(number)){
+            return null;
+        }
+        if (number < 0 || number > 255){
+            return null;
+        }
+        return number;
+    }
+
+    function addToLog(logText){
+        document.getElementById("logger").innerHTML += logText + "<br>";
+        return 
+    }
+
+</script>
 
 </html>
