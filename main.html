@@ -26,16 +26,20 @@
                 <div class="form-group" name="colorForm">
                     
                     <label for="redValue">Red</label>
-                    <input type="text" class="form-control" id="redValue">
+                    <input type="text" class="form-control" onchange="updateColour(this)" id="redValue">
                     
                     <label for="greenValue">Green</label>
-                    <input type="text" class="form-control" id="greenValue">
+                    <input type="text" class="form-control" onchange="updateColour(this)" id="greenValue">
 
                     <label for="blueValue">Blue</label>
-                    <input type="text" class="form-control" id="blueValue">
+                    <input type="text" class="form-control" onchange="updateColour(this)" id="blueValue">
 
                     <button class="btn" onclick="colorController()">Submit</button>
                 </div>
+            </div>
+
+            <div class="col-xs-6" id="colourDisplay">
+                <br><br>
             </div>
 
         </div>
@@ -52,11 +56,8 @@
     var blue;
     var green;
     
-    function colorController(){
-        updateColour("red");
-        updateColour("blue");
-        updateColour("green");
-        setColour("colorTitle");
+    function colorController(colourObject){
+        setColour("colourDisplay");
     }
 
     function setColour(id){
@@ -64,16 +65,17 @@
         element.style.backgroundColor = "rgb(" + [red,green,blue].join(",") + ")";
     }
 
-    function updateColour(colour, id){
-        id = colour + "Value";
-        colourValue = document.getElementById(id).value;
+    function updateColour(colourObject){
+        var id = colourObject.id;
+        var colourValue  = colourObject.value;
+        var colorName = id.substring(0, id.length - "Value".length);
         var number = parseRgbNumber(colourValue);
         if (number == null)
         {
             alert("For " + colour + " please enter a number between 0 and 255 ")
             return;
         }
-        eval("" + colour + " = " + number);
+        eval("" + colorName + " = " + number);
     }
 
     function parseRgbNumber(stringNumber){
