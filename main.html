@@ -9,10 +9,25 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <style>
+    .redBox{
+         border:3px solid rgb(245, 161, 161);
+    }
+    .greenBox{
+         border:3px solid rgb(208, 252, 208);
+    }
+    .blueBox{
+         border:3px solid rgb(205, 205, 240);
+    }
+    .wellHeight{
+        height: 300px;
+    }
+    </style>
 </head>
 
 <body>
     <div class="container">
+            <div class="jumbotron">
         <div class="row">
 
             <div class="col-xs-12">
@@ -20,34 +35,43 @@
                     Color Selection Helper
                 </h2>
             </div>
-        
 
-            <div class="col-xs-6">
-                <div class="form-group" name="colorForm">
-                    
-                    <label for="redValue">Red</label>
-                    <input type="text" class="form-control" onchange="updateColour(this)" id="redValue">
-                    
-                    <label for="greenValue">Green</label>
-                    <input type="text" class="form-control" onchange="updateColour(this)" id="greenValue">
 
-                    <label for="blueValue">Blue</label>
-                    <input type="text" class="form-control" onchange="updateColour(this)" id="blueValue">
+            <div class="col-xs-12">
 
-                    <button class="btn" onclick="colorController()">Submit</button>
+                <div class="col-xs-offset-1 col-xs-4 well wellHeight">
+                    <div class="form-group" name="colorForm">
+
+                        <div class="col-xs-6">
+                            <label for="redValue">Red</label>
+                            <input type="text" class="form-control " onchange="updateColour(this)" id="redValue">
+
+                            <label for="greenValue">Green</label>
+                            <input type="text" class="form-control " onchange="updateColour(this)" id="greenValue">
+
+                            <label for="blueValue">Blue</label>
+                            <input type="text" class="form-control " onchange="updateColour(this)" id="blueValue">
+                            <br>
+                            <button class="btn" onclick="colorController()">Submit</button>
+                        </div>
+                    </div>
                 </div>
-            </div>
 
-            <div class="col-xs-6" id="colourDisplay">
-                <br><br>
-            </div>
 
+                <div class="col-xs-offset-1 col-xs-4 well wellHeight" id="colourDisplay">
+                    <br>
+                    <br>
+                </div>
+
+
+
+            </div>
         </div>
     </div>
-
-<div class="container">
-<p id="logger"></p>
 </div>
+    <div class="container">
+        <p id="logger"></p>
+    </div>
 
 </body>
 
@@ -55,43 +79,47 @@
     var red;
     var blue;
     var green;
-    
-    function colorController(colourObject){
+
+    function colorController(colourObject) {
+        if(red == null || green == null || blue == null){
+            alert("Not all values have been entered.");
+        }
         setColour("colourDisplay");
     }
 
-    function setColour(id){
+    function setColour(id) {
         element = document.getElementById(id);
-        element.style.backgroundColor = "rgb(" + [red,green,blue].join(",") + ")";
+        element.style.backgroundColor = "rgb(" + [red, green, blue].join(",") + ")";
     }
 
-    function updateColour(colourObject){
+    function updateColour(colourObject) {
         var id = colourObject.id;
-        var colourValue  = colourObject.value;
+        var colourValue = colourObject.value;
         var colorName = id.substring(0, id.length - "Value".length);
         var number = parseRgbNumber(colourValue);
-        if (number == null)
-        {
+        if (number == null) {
             alert("For " + colour + " please enter a number between 0 and 255 ")
             return;
         }
         eval("" + colorName + " = " + number);
     }
 
-    function parseRgbNumber(stringNumber){
+    function parseRgbNumber(stringNumber) {
         var number = parseInt(stringNumber);
-        if (Number.isNaN(number)){
+        if (Number.isNaN(number)) {
+            number = null;
             return null;
         }
-        if (number < 0 || number > 255){
+        else if (number < 0 || number > 255) {
+            number = null;
             return null;
         }
         return number;
     }
 
-    function logger(logText){
+    function logger(logText) {
         document.getElementById("logger").innerHTML += logText + "<br>";
-        return 
+        return
     }
 
 </script>
